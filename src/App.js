@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { BrowserRouter, Route } from 'react-router-dom';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
+import NavbarContainer from './components/Navbar/NavbarContainer';
+import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
+import Login from './components/Login/Login';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { inizializedApp } from './redux/app-reducer'
+import Preloader from './components/common/preloader/preloader';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    this.props.inizializedApp()
+  }
+  render() {
+    if (!this.props.inizialized) return <Preloader />
+    return (
+      <BrowserRouter>
+        <div className='app-wrapper'>
+          <HeaderContainer />
+          <NavbarContainer />
+          <div className='app-wrapper-content'>
+            <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
+            <Route path='/dialogs' render={() => <DialogsContainer />} />
+            <Route path='/users' render={() => <UsersContainer />} />
+            <Route path='/auth' render={() => <Login />} />
+          </div>
+        </div>
+      </BrowserRouter>
+    )
+  }
 }
-
-export default App;
+const mapStateToProps = (state) => ({
+  inizialized: state.app.inizialized
+})
+export default compose(
+  connect(mapStateToProps, { inizializedApp }))(App);

@@ -1,0 +1,18 @@
+.header {
+    grid-area: h;
+    background-color: aquamarine;
+}
+
+.header img {
+    width: 50px;
+}
+.login {
+    float: right;
+    margin: 5px 15px;
+}
+
+.login a {
+    color: rgb(255, 0, 0);
+    font-size: 22px;
+    text-decoration: none;
+}

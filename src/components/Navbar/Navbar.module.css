@@ -1,0 +1,26 @@
+.nav {
+  grid-area: n;
+  background-color: burlywood;
+  padding: 5px 10px;
+}
+.item a {
+  font-size: 24px;
+  color: #fff;
+  padding: 2px 5px;
+  text-decoration: none;
+}
+
+.item a.active {
+  color: indianred;
+}
+.item:nth-child(7) {
+  margin-top: 30px;
+}
+
+.friend {
+  font-size: 24px;
+  color: #fff;
+  padding: 2px 5px;
+  font-weight: 400;
+  text-decoration: none;
+}

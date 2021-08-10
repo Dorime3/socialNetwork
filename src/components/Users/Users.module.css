@@ -1,0 +1,14 @@
+.person {
+    border: 1px solid gray;
+    margin: 5px 20px;
+    padding: 5px 5px;
+}
+
+.person img {
+    width: 100px;
+}
+
+.selectedPage {
+    font-weight: 700;
+    font-size: 20px;
+}

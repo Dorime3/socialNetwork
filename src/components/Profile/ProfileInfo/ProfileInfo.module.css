@@ -1,0 +1,15 @@
+.avatar {
+    padding: 10px;
+}
+
+.avatar img {
+    width: 250px;
+}
+
+.head {
+    background: url("https://s01.yapfiles.ru/files/505177/gorod_s_vysoty.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 250px;
+}
