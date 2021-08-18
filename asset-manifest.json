@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/Dorime3/socialNetwork/static/css/main.46633a30.chunk.css",
+    "main.js": "/Dorime3/socialNetwork/static/js/main.33c1cb53.chunk.js",
+    "main.js.map": "/Dorime3/socialNetwork/static/js/main.33c1cb53.chunk.js.map",
+    "runtime-main.js": "/Dorime3/socialNetwork/static/js/runtime-main.04bac669.js",
+    "runtime-main.js.map": "/Dorime3/socialNetwork/static/js/runtime-main.04bac669.js.map",
+    "static/js/2.e9cad378.chunk.js": "/Dorime3/socialNetwork/static/js/2.e9cad378.chunk.js",
+    "static/js/2.e9cad378.chunk.js.map": "/Dorime3/socialNetwork/static/js/2.e9cad378.chunk.js.map",
+    "static/css/3.845f7e39.chunk.css": "/Dorime3/socialNetwork/static/css/3.845f7e39.chunk.css",
+    "static/js/3.4309190e.chunk.js": "/Dorime3/socialNetwork/static/js/3.4309190e.chunk.js",
+    "static/js/3.4309190e.chunk.js.map": "/Dorime3/socialNetwork/static/js/3.4309190e.chunk.js.map",
+    "static/css/4.d3fd752e.chunk.css": "/Dorime3/socialNetwork/static/css/4.d3fd752e.chunk.css",
+    "static/js/4.9a9b6a0f.chunk.js": "/Dorime3/socialNetwork/static/js/4.9a9b6a0f.chunk.js",
+    "static/js/4.9a9b6a0f.chunk.js.map": "/Dorime3/socialNetwork/static/js/4.9a9b6a0f.chunk.js.map",
+    "static/css/5.3cb3fe31.chunk.css": "/Dorime3/socialNetwork/static/css/5.3cb3fe31.chunk.css",
+    "static/js/5.54f1ba19.chunk.js": "/Dorime3/socialNetwork/static/js/5.54f1ba19.chunk.js",
+    "static/js/5.54f1ba19.chunk.js.map": "/Dorime3/socialNetwork/static/js/5.54f1ba19.chunk.js.map",
+    "static/js/6.485efcf6.chunk.js": "/Dorime3/socialNetwork/static/js/6.485efcf6.chunk.js",
+    "static/js/6.485efcf6.chunk.js.map": "/Dorime3/socialNetwork/static/js/6.485efcf6.chunk.js.map",
+    "index.html": "/Dorime3/socialNetwork/index.html",
+    "static/css/3.845f7e39.chunk.css.map": "/Dorime3/socialNetwork/static/css/3.845f7e39.chunk.css.map",
+    "static/css/4.d3fd752e.chunk.css.map": "/Dorime3/socialNetwork/static/css/4.d3fd752e.chunk.css.map",
+    "static/css/5.3cb3fe31.chunk.css.map": "/Dorime3/socialNetwork/static/css/5.3cb3fe31.chunk.css.map",
+    "static/css/main.46633a30.chunk.css.map": "/Dorime3/socialNetwork/static/css/main.46633a30.chunk.css.map",
+    "static/js/2.e9cad378.chunk.js.LICENSE.txt": "/Dorime3/socialNetwork/static/js/2.e9cad378.chunk.js.LICENSE.txt",
+    "static/media/preloader.af2ae354.svg": "/Dorime3/socialNetwork/static/media/preloader.af2ae354.svg",
+    "static/media/user.png": "/Dorime3/socialNetwork/static/media/user.96156881.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.04bac669.js",
+    "static/js/2.e9cad378.chunk.js",
+    "static/css/main.46633a30.chunk.css",
+    "static/js/main.33c1cb53.chunk.js"
+  ]
+}
