@@ -1,27 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import { userProfileThunkCreator, getUserStatus, updateStatus } from '../../redux/profile-reducer'
-import { Redirect, withRouter } from 'react-router-dom';
-import withAuthRedirect from '../hoc/withAuthRedirect';
+import { userProfileThunkCreator, getUserStatus, updateStatus, uploadPhoto, saveForm } from '../../redux/profile-reducer'
+import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import Preloader from '../common/preloader/preloader';
 
 class ProfileContainer extends React.Component {
-    componentDidMount() {
-        let userId = this.props.match.params.userId;
+    getProfile() {
+        const { match, authorizedUserId, history, userProfileThunkCreator, getUserStatus } = this.props
+
+        let userId = match.params.userId;
         if (!userId) {
-            userId = this.props.authorizedUserId
+            userId = authorizedUserId
             if (!userId) {
-                this.props.history.push('/auth')
+                history.push('/auth')
             }
         }
-        this.props.userProfileThunkCreator(userId);
-        this.props.getUserStatus(userId)
+        userProfileThunkCreator(userId);
+        getUserStatus(userId)
     }
-
+    componentDidMount() {
+        this.getProfile();
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.getProfile();
+        }
+    }
     render() {
-        // if (!this.props.match.params.userId) return <Redirect to='/auth' />
 
         return (
             <Profile {...this.props} />
@@ -37,6 +43,6 @@ const mapStateToProps = (state) => ({
 
 
 export default compose(
-    connect(mapStateToProps, { userProfileThunkCreator, getUserStatus, updateStatus }),
+    connect(mapStateToProps, { userProfileThunkCreator, getUserStatus, updateStatus, uploadPhoto, saveForm }),
     withRouter)
     (ProfileContainer)

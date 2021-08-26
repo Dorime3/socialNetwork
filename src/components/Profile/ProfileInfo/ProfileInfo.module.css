@@ -13,3 +13,18 @@
     background-position: center;
     height: 250px;
 }
+
+.profileData {
+    padding-left: 15px;
+}
+
+.profileContacts {
+    padding-left: 10px;
+}
+
+.summaryError {
+    border: 1px solid red;
+    color: red;
+    display: inline-block;
+    padding: 0 10px;
+}

@@ -9,6 +9,7 @@ const Post = (props) => {
             <div>
                 <span>{props.likesCount}</span>
             </div>
+            <button onClick={() => props.deletePostMessage(props.id)}>delete this</button>
         </div>
     )
 }

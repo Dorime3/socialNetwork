@@ -24,35 +24,29 @@ const authReducer = (state = initialState, action) => {
 
 export const setUserData = (userId, email, login, auth) => ({ type: 'SET_USER_DATA', data: { userId, email, login, auth } })
 
-export const authMeThunkCreator = () => (dispatch) => {
-    return AuthApi.authMe()
-        .then(data => {
-            if (data.resultCode === 0) {
-                const { id, email, login } = data.data
-                dispatch(setUserData(id, email, login, true))
-            }
-        })
+export const authMeThunkCreator = () => async (dispatch) => {
+    const data = await AuthApi.authMe()
+    if (data.resultCode === 0) {
+        const { id, email, login } = data.data
+        dispatch(setUserData(id, email, login, true))
+    }
 }
 
 
-export const loginMe = (email, password, rememberMe) => dispatch => {
-    AuthApi.login(email, password, rememberMe)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(authMeThunkCreator())
-            } else {
-                let action = stopSubmit('loginForm', { _error: response.data.messages[0] });
-                dispatch(action);
-            }
-        })
+export const loginMe = (email, password, rememberMe) => async dispatch => {
+    const response = await AuthApi.login(email, password, rememberMe)
+    if (response.data.resultCode === 0) {
+        dispatch(authMeThunkCreator())
+    } else {
+        let action = stopSubmit('loginForm', { _error: response.data.messages[0] });
+        dispatch(action);
+    }
 }
 
-export const logoutMe = () => dispatch => {
-    AuthApi.logout()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setUserData(null, null, null, false))
-            }
-        })
+export const logoutMe = () => async dispatch => {
+    const response = await AuthApi.logout()
+    if (response.data.resultCode === 0) {
+        dispatch(setUserData(null, null, null, false))
+    }
 }
 export default authReducer;

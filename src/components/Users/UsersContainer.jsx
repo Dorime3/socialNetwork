@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { follow, unfollow, toggleFollowingProgress, getUsersThunkAction, followSuccessThunkAction, unfollowSuccessThunkAction } from '../../redux/users-reducer';
 import Preloader from '../common/preloader/preloader';
 import Users from './Users';
-import { getCurrentPage, getFetching, getFollowingProgress, getPageSize, getUsers, getUsersCounts } from './UsersSelectors';
+import { getCurrentPage, getFetching, getFollowingProgress, getPageSize, getPortionUsers, getUsers, getUsersCounts, getUsersSelector } from './UsersSelectors';
 
 class UsersAPI extends React.Component {
 
@@ -32,6 +32,7 @@ class UsersAPI extends React.Component {
                     toggleFollowingProgress={this.props.toggleFollowingProgress}
                     unfollowSuccessThunkAction={this.props.unfollowSuccessThunkAction}
                     followSuccessThunkAction={this.props.followSuccessThunkAction}
+                    portionUsers={this.props.portionUsers}
                 />
             </>
         )
@@ -52,12 +53,13 @@ class UsersAPI extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: getUsers(state),
+        users: getUsersSelector(state),
         pageSize: getPageSize(state),
         usersCounts: getUsersCounts(state),
         currentPage: getCurrentPage(state),
         isFetching: getFetching(state),
-        isFollowingProgress: getFollowingProgress(state)
+        isFollowingProgress: getFollowingProgress(state),
+        portionUsers: getPortionUsers(state)
     }
 }
 

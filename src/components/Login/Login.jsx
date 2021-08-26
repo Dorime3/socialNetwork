@@ -10,9 +10,9 @@ import style from './Login.module.css'
 
 const maxLength30 = maxLength(30);
 
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field name={'email'} component={Input} placeholder={'Login'} validate={[required, maxLength30]} />
             </div>
@@ -22,8 +22,8 @@ const LoginForm = (props) => {
             <div>
                 <Field name={'rememberMe'} component={Input} type={'checkbox'} /> remember me
             </div>
-            {props.error && <div className={style.summaryError}>
-                {props.error}
+            {error && <div className={style.summaryError}>
+                {error}
             </div>}
             <div>
                 <button>Login</button>

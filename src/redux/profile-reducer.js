@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { ProfileApi } from "../components/api/requestsAPI";
 
 const initialState = {
@@ -36,6 +37,16 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 status: action.status
             };
+        case 'DELETE_POST':
+            return {
+                ...state,
+                PostData: [...state.PostData].filter(p => p.id !== action.postId)
+            }
+        case 'SET_PHOTO':
+            return {
+                ...state,
+                userProfile: { ...state.userProfile, photos: action.file }
+            }
         default:
             return state;
     }
@@ -59,30 +70,52 @@ export const setStatus = (status) => {
         status
     }
 }
-
-export const userProfileThunkCreator = (userId) => {
-    return (dispatch) => {
-        ProfileApi.getProfile(userId)
-            .then(data => {
-                dispatch(setUserProfile(data));
-            })
+export const deletePost = (postId) => {
+    return {
+        type: 'DELETE_POST',
+        postId
     }
 }
-export const getUserStatus = (userId) => (dispatch) => {
-    ProfileApi.getStatus(userId)
-        .then(response => {
-            dispatch(setStatus(response.data));
-        })
+export const setPhotoSuccess = (file) => {
+    return {
+        type: 'SET_PHOTO',
+        file
+    }
 }
 
-export const updateStatus = (status) => (dispatch) => {
-    ProfileApi.setStatus(status)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        })
+export const userProfileThunkCreator = (userId) => {
+    return async (dispatch) => {
+        const data = await ProfileApi.getProfile(userId)
+        dispatch(setUserProfile(data));
+    }
+}
+export const getUserStatus = (userId) => async (dispatch) => {
+    const response = await ProfileApi.getStatus(userId)
+    dispatch(setStatus(response.data));
 }
 
+export const updateStatus = (status) => async (dispatch) => {
+    const response = await ProfileApi.setStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status))
+    }
+}
+export const uploadPhoto = (file) => async (dispatch) => {
+    const response = await ProfileApi.setPhoto(file)
+    if (response.data.resultCode === 0) {
+        dispatch(setPhotoSuccess(response.data.data.photos))
+    }
+}
+export const saveForm = (formData) => async (dispatch, getState) => {
+    const response = await ProfileApi.setUserData(formData);
+    const userId = getState().auth.userId;
+    if (response.data.resultCode === 0) {
+        dispatch(userProfileThunkCreator(userId));
+    } else {
+        let action = stopSubmit('profileDataForm', { _error: response.data.messages[0] });
+        dispatch(action);
+        return Promise.reject(response.data.messages[0]);
+    }
+}
 
 export default profileReducer;
