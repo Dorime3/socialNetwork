@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import { maxLength, required } from '../../utils/validators/validators';
 import { Input } from '../common/FormsContriols/FormsControls';
@@ -41,39 +41,56 @@ const ReduxLoginForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>({
     form: 'loginForm'
 })(LoginForm)
 
-type MapStatePropsType = {
-    url: string | null,
-    isAuth: boolean
-}
-type MapDispatchPropsType = {
-    loginMe: (email: string, password: string, rememberMe: boolean, captcha: string) => void
-}
+// type MapStatePropsType = {
+//     url: string | null,
+//     isAuth: boolean
+// }
+// type MapDispatchPropsType = {
+//     loginMe: (email: string, password: string, rememberMe: boolean, captcha: string) => void
+// }
 
-type PropsType = MapStatePropsType & MapDispatchPropsType
+// type PropsType = MapStatePropsType & MapDispatchPropsType
 type LoginFormValuesType = {
     password: string,
     email: string,
     rememberMe: boolean,
     captcha: string
 }
-const Login: React.FC<PropsType> = (props) => {
+
+export const Login = () => {
+    const isAuth = useSelector((state: AppStateType) => state.auth.auth)
+    const url = useSelector((state: AppStateType) => state.auth.url)
+    const dispatch = useDispatch()
     const onChangeSubmit = (formData: LoginFormValuesType) => {
-        props.loginMe(formData.email, formData.password, formData.rememberMe, formData.captcha)
+        dispatch(loginMe(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to='/profile' />
     }
-    return (
-        <>
-            <h1>Login</h1>
-            <ReduxLoginForm onSubmit={onChangeSubmit} url={props.url} />
-        </>
-    )
+
+    return <>
+        <h1>Login</h1>
+        <ReduxLoginForm onSubmit={onChangeSubmit} url={url} />
+    </>
 }
+// const Login: React.FC<PropsType> = (props) => {
+//     const onChangeSubmit = (formData: LoginFormValuesType) => {
+//         props.loginMe(formData.email, formData.password, formData.rememberMe, formData.captcha)
+//     }
+//     if (props.isAuth) {
+//         return <Redirect to='/profile' />
+//     }
+//     return (
+//         <>
+//             <h1>Login</h1>
+//             <ReduxLoginForm onSubmit={onChangeSubmit} url={props.url} />
+//         </>
+//     )
+// }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-    isAuth: state.auth.auth,
-    url: state.auth.url
-})
+// const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+//     isAuth: state.auth.auth,
+//     url: state.auth.url
+// })
 
-export default connect(mapStateToProps, { loginMe })(Login)
+// export default connect(mapStateToProps, { loginMe })(Login)

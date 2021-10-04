@@ -33,3 +33,6 @@ export const getFetching = (state: AppStateType) => {
 export const getFollowingProgress = (state: AppStateType) => {
     return state.usersPage.isFollowingProgress
 }
+export const getUsersFilter = (state: AppStateType) => {
+    return state.usersPage.filter
+}

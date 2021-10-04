@@ -3,9 +3,9 @@ import './App.css';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 //import ProfileContainer from './components/Profile/ProfileContainer';
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
+import { UsersPage } from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
+import { Login } from './components/Login/Login';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { inizializedApp, showGetError } from './redux/app-reducer'
@@ -52,7 +52,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
             <Route exact path='/' render={() => <Redirect to='/profile' />} />
             <Route path='/profile/:userId?' render={() => <SuspendedProfile />} />
             <Route path='/dialogs' render={() => <SuspendedDialogs />} />
-            <Route path='/users' render={() => <UsersContainer pageTitle='Самураи' />} />
+            <Route path='/users' render={() => <UsersPage pageTitle='Самураи' />} />
             <Route path='/auth' render={() => <Login />} />
             <Route path='/*' render={() => <div>404 NOT FOUND</div>} />
           </Switch>

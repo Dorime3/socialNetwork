@@ -6,13 +6,13 @@ import { PhotosType, UserType } from '../../types/types';
 
 type PropsType = {
     user: UserType,
-    unfollowSuccessThunkAction: (userId: number) => void,
-    followSuccessThunkAction: (userId: number) => void,
+    unfollow: (userId: number) => void,
+    follow: (userId: number) => void,
     isFollowingProgress: Array<number>,
 }
 
 const User: React.FC<PropsType> = (props) => {
-    const { user, unfollowSuccessThunkAction, followSuccessThunkAction, isFollowingProgress } = props;
+    const { user, unfollow, follow, isFollowingProgress } = props;
     return (
         <div key={user.id} className={s.person}>
             <NavLink to={'/profile/' + user.id}>
@@ -20,11 +20,11 @@ const User: React.FC<PropsType> = (props) => {
             </NavLink>
             <div>{user.followed
                 ? <button disabled={isFollowingProgress.some(el => el === user.id)} onClick={() => {
-                    unfollowSuccessThunkAction(user.id)
+                    unfollow(user.id)
                 }
                 }>Unfollow</button>
                 : <button disabled={isFollowingProgress.some(el => el === user.id)} onClick={() => {
-                    followSuccessThunkAction(user.id)
+                    follow(user.id)
                 }
                 }>Follow</button>}
             </div>

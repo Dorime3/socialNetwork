@@ -15,8 +15,8 @@ export const UsersApi = {
         return instance.post<APIResponseType>(`follow/${id}`, {})
             .then(response => response.data);
     },
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<getUsersResponseType>(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers(currentPage: number, pageSize: number, term: string = '', friend: null | boolean = null) {
+        return instance.get<getUsersResponseType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null ? '' : `&friend=${friend}`))
             .then(response => response.data);
     }
 };
