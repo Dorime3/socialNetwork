@@ -6,21 +6,30 @@ import { ProfileStatusWithHooks } from './ProfileStatusWithHooks';
 import ProfileData from './ProfileData';
 import ReduxProfileDataForm from './ProfileDataForm';
 import { ProfileType } from '../../../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from '../../../redux/redux-store';
+import { saveForm, uploadPhoto } from '../../../redux/profile-reducer';
 
 type PropsType = {
     profile: ProfileType,
-    status: string,
-    updateStatus: (status: string) => void,
+    //     status: string,
+    // updateStatus: (status: string) => void,
     isOwner: boolean,
-    globalError: string | null,
-    uploadPhoto: (file: File) => void,
-    saveForm: (formData: ProfileType) => Promise<any>
+    // globalError: string | null,
+    // uploadPhoto: (file: File) => void,
+    // saveForm: (formData: ProfileType) => Promise<any>
 }
 
 const ProfileInfo: React.FC<PropsType> = (props) => {
+    const status = useSelector((state: AppStateType) => state.profilePage.status)
+    // const authorizedUserId = useSelector((state: AppStateType) => state.auth.userId)
+    const globalError = useSelector((state: AppStateType) => state.app.globalError)
+    const dispatch = useDispatch();
+
+
     const onUploadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
-            props.uploadPhoto(e.target.files[0])
+            dispatch(uploadPhoto(e.target.files[0]))
         }
     }
     const [editMode, setEditMode] = useState(false)
@@ -30,9 +39,10 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 
     const onSubmit = (formData: ProfileType) => {
         // todo: remove then
-        props.saveForm(formData).then(() => {
-            setEditMode(false);
-        })
+        dispatch(saveForm(formData))
+        // .then(() => {
+        setEditMode(false);
+        // })
     }
     return (
         <div>
@@ -41,8 +51,8 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
             <div className={s.avatar}>
                 <img alt='avatar' src={props.profile.photos.large ? props.profile.photos.large : defaultPicture} />
                 {props.isOwner && <input type='file' onChange={onUploadPhoto} />}
-                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
-                {props.globalError && <div>{props.globalError}</div>}
+                <ProfileStatusWithHooks status={status} />
+                {globalError && <div>{globalError}</div>}
             </div>
             {editMode
                 ? <ReduxProfileDataForm initialValues={props.profile} onSubmit={onSubmit} profile={props.profile} isOwner={props.isOwner} />

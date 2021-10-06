@@ -104,7 +104,7 @@ export const userProfileThunkCreator = (userId: number | null): ThunkType => {
         dispatch(actions.setUserProfile(data));
     }
 }
-export const getUserStatus = (userId: number): ThunkType => async (dispatch) => {
+export const getUserStatus = (userId: number | null): ThunkType => async (dispatch) => {
     const data = await ProfileApi.getStatus(userId)
     dispatch(actions.setStatus(data));
 }
@@ -119,7 +119,7 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
         alert(error.response.status)
     }
 }
-export const uploadPhoto = (file: PhotosType): ThunkType => async (dispatch) => {
+export const uploadPhoto = (file: File): ThunkType => async (dispatch) => {
     const data = await ProfileApi.setPhoto(file)
     if (data.resultCode === 0) {
         dispatch(actions.setPhotoSuccess(data.data.photos))

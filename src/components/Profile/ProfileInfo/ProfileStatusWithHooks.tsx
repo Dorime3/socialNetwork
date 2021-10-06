@@ -1,8 +1,10 @@
 import React, { useState, useEffect, ChangeEventHandler, ChangeEvent } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateStatus } from '../../../redux/profile-reducer'
 
 type PropsType = {
-    status: string,
-    updateStatus: (status: string) => void
+    status: string
+    // updateStatus: (status: string) => void
 }
 
 export const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
@@ -12,13 +14,14 @@ export const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
         setStatus(props.status)
     }, [!props.status]);
 
+    const dispatch = useDispatch()
 
     const activateEditMode = () => {
         setEditMode(true)
     }
     const deActivateEditMode = () => {
         setEditMode(false)
-        props.updateStatus(status)
+        dispatch(updateStatus(status))
     }
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value)

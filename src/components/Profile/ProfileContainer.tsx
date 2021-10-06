@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Profile from './Profile';
 import { userProfileThunkCreator, getUserStatus, updateStatus, uploadPhoto, saveForm } from '../../redux/profile-reducer'
 import { withRouter, RouteComponentProps } from 'react-router-dom';
@@ -35,9 +35,11 @@ type PathParamsType = {
 type PropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
 // type PropsType = RouteComponentProps & MapStatePropsType & MapDispatchPropsType & OwnPropsType;
 
-class ProfileContainer extends React.Component<PropsType> {
-    getProfile() {
-        const { match, authorizedUserId, history, userProfileThunkCreator, getUserStatus } = this.props
+const ProfileContainer: React.FC<PropsType> = (props) => {
+    const authorizedUserId = useSelector((state: AppStateType) => state.auth.userId);
+    const dispatch = useDispatch()
+    const getProfile = () => {
+        const { match, history } = props
 
         let userId: number | null = +match.params.userId;
         if (!userId) {
@@ -46,37 +48,34 @@ class ProfileContainer extends React.Component<PropsType> {
                 history.push('/auth')
             }
         }
-        userProfileThunkCreator(userId);
-        getUserStatus(userId)
+        dispatch(userProfileThunkCreator(userId));
+        dispatch(getUserStatus(userId))
     }
-    componentDidMount() {
-        this.getProfile();
-    }
-    componentDidUpdate(prevProps: PropsType) {
-        if (this.props.match.params.userId !== prevProps.match.params.userId) {
-            this.getProfile();
-        }
-    }
-    render() {
 
-        return (
-            <Profile
-                profile={this.props.profile}
-                status={this.props.status}
-                globalError={this.props.globalError}
-                updateStatus={this.props.updateStatus}
-                isOwner={+this.props.match.params.userId}
-                uploadPhoto={this.props.uploadPhoto}
-                saveForm={this.props.saveForm}
-            />
-        )
-    }
+    useEffect(() => {
+        getProfile();
+    }, [])
+
+    useEffect(() => {
+        getProfile();
+    }, [props.match.params.userId])
+
+    return (
+        <Profile
+            // profile={props.profile}
+            // status={props.status}
+            // globalError={props.globalError}
+            // updateStatus={props.updateStatus}
+            isOwner={+props.match.params.userId}
+        // uploadPhoto={props.uploadPhoto}
+        // saveForm={props.saveForm}
+        />
+    )
 }
 
 
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, { userProfileThunkCreator, getUserStatus, updateStatus, uploadPhoto, saveForm }),
     withRouter)
     (ProfileContainer)
