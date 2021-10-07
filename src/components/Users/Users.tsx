@@ -44,7 +44,7 @@ export const Users: React.FC<PropsType> = (props) => {
     }, [])
     useEffect(() => {
         history.push({
-            pathname: '/users',
+            pathname: '/developers',
             search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
         })
     }, [filter, currentPage])

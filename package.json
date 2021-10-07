@@ -12,6 +12,7 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "@types/redux-form": "^8.3.2",
+    "antd": "^4.16.13",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "formik": "^2.2.9",
