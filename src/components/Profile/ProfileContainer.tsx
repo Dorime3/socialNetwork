@@ -22,11 +22,11 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 //     globalError: string | null
 // }
 type MapDispatchPropsType = {
-    userProfileThunkCreator: (userId: number | null) => void,
-    getUserStatus: (userId: number | null) => void,
-    updateStatus: (status: string) => void,
-    uploadPhoto: (file: File) => void,
-    saveForm: (formData: ProfileType) => Promise<any>
+    // userProfileThunkCreator: (userId: number | null) => void,
+    // getUserStatus: (userId: number | null) => void,
+    // updateStatus: (status: string) => void,
+    // uploadPhoto: (file: File) => void,
+    // saveForm: (formData: ProfileType) => Promise<any>
 }
 type PathParamsType = {
     userId: string

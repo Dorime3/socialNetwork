@@ -6,6 +6,7 @@ import { UserSearchForm } from './usersSearchForm';
 import { FilterType, followSuccessThunkAction, getUsersThunkAction, unfollowSuccessThunkAction } from '../../redux/users-reducer';
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentPage, getFollowingProgress, getPageSize, getPortionUsers, getUsersCounts, getUsersFilter, getUsersSelector } from './UsersSelectors';
+import { useHistory } from 'react-router';
 
 type PropsType = {
     // usersCounts: number,
@@ -27,10 +28,27 @@ export const Users: React.FC<PropsType> = (props) => {
     const filter = useSelector(getUsersFilter)
     const users = useSelector(getUsersSelector)
     const isFollowingProgress = useSelector(getFollowingProgress)
-    useEffect(() => {
-        dispatch(getUsersThunkAction(currentPage, pageSize, filter))
-    }, [])
     const dispatch = useDispatch();
+    const history = useHistory();
+
+
+    useEffect(() => {
+        const { search } = history.location
+        const params = new URLSearchParams(search);
+        let actualPage = currentPage;
+        let actualFilter = filter;
+        if (!!params.get('page')) actualPage = Number(params.get('page'));
+        if (!!params.get('term')) actualFilter = { ...actualFilter, term: params.get('term') as string }
+        if (!!params.get('friend')) actualFilter = { ...actualFilter, friend: params.get('friend') === 'null' ? null : params.get('friend') === 'true' ? true : false }
+        dispatch(getUsersThunkAction(actualPage, pageSize, actualFilter))
+    }, [])
+    useEffect(() => {
+        history.push({
+            pathname: '/users',
+            search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+        })
+    }, [filter, currentPage])
+
     const follow = (userId: number) => {
         dispatch(followSuccessThunkAction(userId))
     }
